@@ -542,6 +542,78 @@ How it works
 
 (what is in the ``venv`` directory)
 
+.. code:: bash
+
+  tibs ~/temp$ ls -F venv
+  bin/        include/    lib/        pyvenv.cfg
+
+.. code:: bash
+
+  tibs ~/temp$ more venv/pyvenv.cfg
+  home = /usr/local/bin
+  include-system-site-packages = false
+  version = 3.7.5
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F venv/bin/
+  __pycache__/            pip*                    rst2latex.py*
+  activate                pip3*                   rst2man.py*
+  activate.csh            pip3.7*                 rst2odt.py*
+  activate.fish           pygmentize*             rst2odt_prepstyles.py*
+  chardetect*             python@                 rst2pseudoxml.py*
+  easy_install*           python3@                rst2s5.py*
+  easy_install-3.7*       rst2html.py*            rst2xetex.py*
+  garden*                 rst2html4.py*           rst2xml.py*
+  garden.bat*             rst2html5.py*           rstpep2html.py*
+
+.. code:: bash
+
+  tibs ~/temp$ ls -l venv/bin/python
+  lrwxr-xr-x  1 tibs  staff  7 19 Jan 16:50 venv/bin/python -> python3
+  tibs ~/temp$ ls -l venv/bin/python3
+  lrwxr-xr-x  1 tibs  staff  22 19 Jan 16:50 venv/bin/python3 -> /usr/local/bin/python3
+
+.. code:: bash
+
+  tibs ~/temp$ ls venv/include
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F venv/lib
+  python3.7/
+  tibs ~/temp$ ls -F venv/lib/python3.7
+  site-packages/
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F venv/lib/python3.7/site-packages
+  Kivy-1.11.1.dist-info/                  kivy/
+  Kivy_Garden-0.1.4-py3.7.egg-info/       pip/
+  Pygments-2.5.2.dist-info/               pip-19.3.1.dist-info/
+  __pycache__/                            pkg_resources/
+  certifi/                                pygments/
+  certifi-2019.11.28.dist-info/           pypercard/
+  chardet/                                pypercard-0.0.1a4.dist-info/
+  chardet-3.0.4.dist-info/                requests/
+  docutils/                               requests-2.22.0.dist-info/
+  docutils-0.16.dist-info/                setuptools/
+  easy_install.py                         setuptools-41.2.0.dist-info/
+  garden/                                 urllib3/
+  idna/                                   urllib3-1.25.7.dist-info/
+  idna-2.8.dist-info/
+
+By contrast, if I create another virtual environment (``venv2``) and don't
+install anything in it, *its* ``venv2/lib`` looks like:
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F venv2/lib/python3.7/site-packages/
+  __pycache__/                    pkg_resources/
+  easy_install.py                 setuptools/
+  pip/                            setuptools-41.2.0.dist-info/
+  pip-19.2.3.dist-info/
+
 Where to put the venv directory
 ===============================
 
