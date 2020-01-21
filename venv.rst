@@ -620,10 +620,48 @@ Where to put the venv directory
 "project" - one venv per directory tree
 ---------------------------------------
 
+This is a natural way to work - for instance, to have a ``~/work`` directory,
+and inside it a sub-directory for each project, and each of those contains its
+own ``venv``.
+
+When you ``cd`` into a directory, you activate its virtual environment.
+
+This works well if you use one terminal window per project, and also works
+well with IDEs, which generally like to identify a project directory tree.
+
+There are also tools like ``direnv`` (??) which will facilitate this by
+actually starting up the virtualenv when you ``cd`` into the directory tree.
+
+One of the reasons this works well is it makes it fairly easy to remember
+which virtual environment you *should* be using.
+
+I've used this at work, where my Python code tended to be organised in this
+manner.
+
+This is also the sort of way of working that both ``pipenv`` and ``poetry``
+encourage, because they look in the current directory and "upwards" to find
+the specification of which virtual environment to use. Regardless, both
+(certainly ``pipenv``) keep the actual virtual environment directories in a
+central place - this makes it easier for the programs to manage them.
+
 "environment" - one venv per purpose
 ------------------------------------
 
   (The name "environment" isn't as good a name for this, but it will do.)
+
+This works well if you like to keep one setup for each type of work.
+
+For instance, one environment for documentation work (docutils, sphinx, etc.),
+regardless of where it is. Perhaps another for using numpy/scipy and so on.
+
+I've tended to use this arrangement more at home.
+
+This relies a lot more no actually keeping an eye on the prompt, to make sure
+that the right virtual environment for the current purpose is in force.
+
+If you're working this way, you almost certainly want to keep the virtual
+environment directories in a central place. On Linux this would typically be
+in ``~/venv/`` or ``~/.venv/`` or perhaps somewhere like ``~/local/share/virtualenvs/``.
 
 ``python3 -m venv help``
 ========================
