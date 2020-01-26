@@ -860,4 +860,79 @@ function!
 Bash functions aren't as nice, but should still (**check**) be able to do a
 similar job.
 
-On the whole, though, it's
+On the whole, though, it's really just as easy to do it the longer way.
+
+Windows virtual machine
+=======================
+
+.. Super secure information(!)
+
+   * password: sausages
+   * first pet's name: first
+   * city where I was born: city
+   * first school: school
+
+The version of Windows I got as a trial version was not recent enough to
+prompt me to get Python when I typed ``python`` at the CMD.EXE prompt, so I
+did have to go to the Microsoft App Store and install it myself. Not a
+problem.
+
+::
+
+  C:\Users\Tibs>mkdir temp
+  C:\Users\Tibs>cd temp
+
+Python is Python 3;
+
+.. image:: images/ScreenshowWindows0a.png
+
+::
+
+  C:\Users\Tibs\temp>python3 -m venv venv
+
+or the same command line as a picture:
+  
+.. image:: images/ScreenshowWindows0b.png
+
+The new ``venv`` directory is much like that on unix, but there is a
+``Scripts`` directory, instead of the ``bin`` directory:
+
+.. image:: images/ScreenshowWindows1.png
+
+And as on unix we have a ``pyvenv.cfg`` which describes the virtual
+environment:
+           
+.. image:: images/ScreenshowWindows2.png
+
+In the ``Scripts`` directory, we have:
+
+.. image:: images/ScreenshotsWindwows3.png
+
+When we ``activate`` (no need for the ``source``), we get the prompt altered,
+just as on unix:
+
+.. image:: images/ScreenshotsWindows4.png
+
+We don't yet have ``requests`` installed for this Python:
+
+.. image:: images/ScreenshotsWindows5.png
+
+but if we do::
+
+  >pip install requests
+
+we get the normal output, and it also (as for unix) tells us we might want to
+upgrade pip.
+
+Now ``requests`` is available:
+
+.. image:: images/ScreenshotsWindows6.png
+
+and the ``site-packages`` library in the ``venv`` has gone from:
+
+.. image:: images/ScreenshotsWindows7.png
+
+to:
+
+.. image:: images/ScreenshotsWindows8.png
+
