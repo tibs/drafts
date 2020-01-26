@@ -8,8 +8,8 @@ a really good resource.
 https://interrupt.memfault.com/blog/conda-developer-environments - using conda
 
 From ntoll:
-
-   ...problems setting up Virtualenv to be used with VSCode on
+Gu
+   ...PROBLEMS setting up Virtualenv to be used with VSCode on
    Windows. It turns out that if you Google "VSCode Windows Virtualenv"
    this is the top result:
    https://code.visualstudio.com/docs/python/environments which looks
@@ -749,7 +749,69 @@ The ``--system-site-packages`` switch
 
 Related: IDEs
 =============
-  
+
+VSCode
+------
+
+If you are editing a Python file, the Python interpreter being used is shown
+at the bottom left of the screen.
+
+If you click on that, then you will be shown a list of available Python
+interpreters, and that will include those provided by your virtual
+environments.
+
+The page https://code.visualstudio.com/docs/python/environments explains how
+it decides where to look, and also how to specify a Python interpreter that it
+cannout automatically find.
+
+If you are working with a "workspace", then it will automatically find a
+``.venv`` directory in that workspace.
+
+.. note:: To add new locations to look for virtual environments, go to the
+   Settings in VSCode and search for "virtual". This seems to allow setting
+   particular directories in your home directory, or specific directories
+   elsewhere.
+
+   .. image:: images/vscode-venv-folders.png
+
+
+PyCharm
+-------
+
+PyCharm always things in terms of "projects". 
+
+When setting up the Pytho interpreter for use in a PyCharm project, you need
+to specify the full path to the Python executable. So, for instance::
+
+  ~/tibs/temp/venv/bin/python3
+
+(When I'm writing this (January 2020), PyCharm has explicit support for conda
+and the older ``virtualenv`` mechanism, but not for the modern ``python3 -m
+venv`` style of virtual environment, so you have to help it a bit.)
+
+Atom
+----
+
+There appear to be more than one packages that support virtual environments
+for Python in atom. I'm assuimg that if you use atom you know your way around
+the package system.
+
+Jupyter notebook
+----------------
+
+The simplest thing to do is to create your virtual environment, then install
+jupyter notebook within it. When you run that jupyter notebook, it will
+automatically use the Python it was installed for.
+
+For instance::
+
+  $ source .venv/bin/activate
+  $ pip install jupyter
+  $ jupyter notebook
+
+It *is* possible to run multiple Python "backends" for Jupyter notebook, but
+that's a bit beyond this document.
+
 Related: multiple Pythons
 =========================
 
