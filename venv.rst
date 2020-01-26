@@ -317,11 +317,11 @@ even though that *sounds* more sensible.
 
 On Windows, if you're using CMD.EXE, you do::
 
-  > venv\bin\activate.bat
+  > venv\Scripts\activate.bat
 
 and if you're using Powershell you do::
 
-  PS > venv\bin\Activate.ps1
+  PS > venv\Scripts\Activate.ps1
 
 ..
 
