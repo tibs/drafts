@@ -884,7 +884,7 @@ problem.
 
 Python is Python 3;
 
-.. image:: images/ScreenshowWindows0a.png
+.. image:: images/ScreenshotWindows0a.png
 
 ::
 
@@ -892,7 +892,7 @@ Python is Python 3;
 
 or the same command line as a picture:
   
-.. image:: images/ScreenshowWindows0b.png
+.. image:: images/ScreenshotWindows0b.png
 
 The new ``venv`` directory is much like that on unix, but there is a
 ``Scripts`` directory, instead of the ``bin`` directory:
@@ -902,20 +902,20 @@ The new ``venv`` directory is much like that on unix, but there is a
 And as on unix we have a ``pyvenv.cfg`` which describes the virtual
 environment:
            
-.. image:: images/ScreenshowWindows2.png
+.. image:: images/ScreenshotWindows2.png
 
 In the ``Scripts`` directory, we have:
 
-.. image:: images/ScreenshotsWindwows3.png
+.. image:: images/ScreenshotWindwows3.png
 
 When we ``activate`` (no need for the ``source``), we get the prompt altered,
 just as on unix:
 
-.. image:: images/ScreenshotsWindows4.png
+.. image:: images/ScreenshotWindows4.png
 
 We don't yet have ``requests`` installed for this Python:
 
-.. image:: images/ScreenshotsWindows5.png
+.. image:: images/ScreenshotWindows5.png
 
 but if we do::
 
@@ -926,13 +926,13 @@ upgrade pip.
 
 Now ``requests`` is available:
 
-.. image:: images/ScreenshotsWindows6.png
+.. image:: images/ScreenshotWindows6.png
 
 and the ``site-packages`` library in the ``venv`` has gone from:
 
-.. image:: images/ScreenshotsWindows7.png
+.. image:: images/ScreenshotWindows7.png
 
 to:
 
-.. image:: images/ScreenshotsWindows8.png
+.. image:: images/ScreenshotWindows8.png
 
