@@ -156,6 +156,15 @@ don't overlap much. There's no particular reason to have the unnecessary
 packages available, and if we constrain our workspace a bit, it makes it
 easier to reason about problems when they do occur.
 
+Keeping track
+-------------
+Need a better name for this one.
+
+A virtual environment lets you be explicit about what you have installed, and
+that makes it easier to produce a proper package when you're developing.
+
+``pip freeze`` and ``pipdeptree``
+
 How one does this
 =================
 
@@ -815,8 +824,71 @@ that's a bit beyond this document.
 Related: multiple Pythons
 =========================
 
+How to build more than one Python
+
+* homebrew only (really) supports one Python per version (or maybe even one
+  per major version)
+* ``pyenv`` to build other Pythons. Complementary to virtual environments.
+* Still recommend using virtual environments for those separate Pythons!
+
 Related: wrapper tools
 ======================
+
+**Actually, probably promote this to just after the main venv stuff?**
+
+Common points:
+
+* Maybe work for Python 2 as well
+* Maybe (because of that) create a Pyton 2 - style virtual environment, which
+  can cause probems in some corner cases
+* Tend (?) to keep the virtual environment directories in one central place,
+  rather than in individual "project" directories
+* May stop one needing to say ``source``
+* If you want a different Python (than the one the tool is installed for? -
+  might be non-obvious), you have to name it explicitly, and that's easy to
+  forget. That's not possible with the ``python3 -m venv`` approach
+  (obviously).
+* May give you other benefits (i.e., pipenv and poetry do other things, like
+  providing a list of packages installed and a lockfile)
+* Document which work on Windows (if any do not)
+
+virtualenv
+----------
+
+* Are there particulr benefits (apart, maybe, from not having to remmember
+  ``source``)?
+* How much does it differ from just doing ``python3 -m venv``?
+
+PyCharm support
+
+virtualenvwrapper
+-----------------
+
+``mkvirtualenv``
+
+pipenv
+------
+
+``pipenv init`` and ``pipenv shell``
+
+* where it keeps the virtual environment, and how it names it
+* does it work on windows?
+* its intended purpose
+* conformity with the future of Python packaging (toml files)
+* Python 2 / 3 compatibility and the effects of that
+
+and for pipenv in particular, the "political" history
+
+poetry
+------
+
+``poetry init`` and ``poetry shell``
+
+* where it keeps the virtual environment, and how it names it
+* does it work on windows?
+* its intended purpose
+* conformity with the future of Python packaging (toml files)
+* Python 2 / 3 compatibility and the effects of that
 
 Other things
 ============
