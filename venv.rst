@@ -25,6 +25,54 @@ like to break up the concept of “packaging” into at least three different
 topics, each associated with a specific use case, and then talk a bit about
 each of them"
 
+Links
+=====
+
+Official documentation:
+
+* `Creating Virtual Environments`_ in the `Python Packaging User Guide`_
+* `venv - Creation of virtual environments`_ in the Python library documentation
+* `Virtual Environments and Packages`_ in the Python tutorial
+
+.. _`Creating Virtual Environments`:
+    https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments
+.. _`Python Packaging User Guide`:
+    https://packaging.python.org/tutorials/installing-packages
+.. _`venv - Creation of virtual environments`: https://docs.python.org/3/library/venv.html
+.. _`Virtual Environments and Packages`: https://docs.python.org/3/tutorial/venv.html
+
+Other interesting pages:
+
+* `An Effective Python Environment: Making Yourself at Home`_, at `Real Python`_
+* `A Guide to Python Virtual Environments with virtualenvwrapper`_
+* `How to create a Python 3 virtual environment in Windows 10`_
+* `Virtual Environments`_ at `The Hitchhiker's Guide to Python`_, which shows
+  how to use `virtualenv`_ and `virtualenvwrapper`_
+  
+.. _`An Effective Python Environment: Making Yourself at Home`:
+   https://realpython.com/effective-python-environment/
+.. _`Real Python`: https://realpython.com
+.. _`A Guide to Python Virtual Environments with virtualenvwrapper`:
+   https://howchoo.com/g/nwewzjmzmjc/a-guide-to-python-virtual-environments-with-virtualenvwrapper
+.. _`How to create a Python 3 virtual environment in Windows 10`:
+   https://www.techcoil.com/blog/how-to-create-a-python-3-virtual-environment-in-windows-10/
+.. _`Virtual Environments`: https://python-guide-ru.readthedocs.io/en/latest/dev/virtualenvs.html
+.. _`The Hitchhiker's Guide to Python`: https://python-guide-ru.readthedocs.io/
+
+
+I don't talk about using ``conda`` here, but it's an alternative to the normal
+Python virtual environment mechanisms that was introduced by the Anaconda_
+project, which is much used in scientific Python.
+
+* `Getting started with Python environments (using Conda)`_
+
+.. _Anaconda: https://anaconda.org/
+.. _`Getting started with Python environments (using Conda)`:
+   https://towardsdatascience.com/getting-started-with-python-environments-using-conda-32e9f2779307
+   
+.. _virtualenv:
+.. _virtualenvwrapper:
+
 -----------------------------------
 
 Other topics:
@@ -165,6 +213,14 @@ that makes it easier to produce a proper package when you're developing.
 
 ``pip freeze`` and ``pipdeptree``
 
+An example
+----------
+
+At our January meeting, we were told about ``pypercard``, which is a very nice
+package, but has quite a few dependencies. If I want to play with it, then I
+probably don't want to "splash" those dependencies all over my normal working
+environment, especially if I'm also doing actual work with Python.
+
 How one does this
 =================
 
@@ -180,6 +236,20 @@ For the moment, just
 What it does / how it works
 ===========================
 
+Examples
+--------
+
+The unix examples are from my Mac at home. They text is cut-and-pasted from
+my terminal.
+
+When you see ``tibs ~$`` (or something similar) at the start of a line, that
+is my prompt - everything up to the ``$``. So if you're following along, only
+type the stuff after the ``$`` (and the space that follows it).
+
+For Windows, I've run Windows 10 in a virtual machine, and made screenshots.
+Apologies for those - this seemed the simplest way to do it. I'll mostly only
+talk about Windows when I'm talking about its differences from unix.
+
 Make a working directory
 ------------------------
 
@@ -193,7 +263,7 @@ First, I make a directory to work in, and move there:
 
 Check what Python(s) we have available
 --------------------------------------
-.. show the new prompt
+
 Let's find out what version of Python I'm running - on my machine:
 
 .. code:: bash
@@ -201,7 +271,7 @@ Let's find out what version of Python I'm running - on my machine:
   tibs ~/temp$ python --version
   Python 2.7.17
   tibs ~/temp$ python3 --version
-  Python 3.7.5
+  Python 3.7.6
 
 I can investigate that a bit further:
 
@@ -364,11 +434,11 @@ Specifically:
 .. code:: bash
 
   (venv) tibs ~/temp$ python3 --version
-  Python 3.7.5
+  Python 3.7.6
   (venv) tibs ~/temp$ python --version
-  Python 3.7.5
+  Python 3.7.6
 
-That is, the ``python3`` command gives us Python 3.7.5, the Python we used to
+That is, the ``python3`` command gives us Python 3.7.6, the Python we used to
 create the venv, but now the ``python`` command does as well.
 
 We'll go into why that is later on, but for the moment, it's enough to notice
@@ -409,46 +479,28 @@ First, we need to remember to re-activate it:
   tibs ~/temp$ source venv/bin/activate.fish
   (venv) tibs ~/temp$
 
-and then we can install a package:
+and then we can install a package. I shall choose ``requests`` - this is
+actually a package that has caused me dependency clashes at work in the past,
+even though it's generally very well behaved.
 
 .. code:: bash
 
-  (venv) tibs ~/temp$ pip install pypercard
-  Collecting pypercard
-    Downloading https://files.pythonhosted.org/packages/9c/fb/1bf28a95e9faaecc9e22dd3a075d7b525a0958c360de2cde0894be1e1834/pypercard-0.0.1a4-py3-none-any.whl
-  Collecting Kivy==1.11.1 (from pypercard)
-    Downloading https://files.pythonhosted.org/packages/0f/51/1fdcd05217919e77016f8f241d19a87d1d15cf1c074d78a6f3c5ca44198b/Kivy-1.11.1-cp37-cp37m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl (6.9MB)
-      |████████████████████████████████| 7.0MB 4.7MB/s
-  Collecting Kivy-Garden==0.1.4 (from pypercard)
-    Downloading https://files.pythonhosted.org/packages/7d/68/decaee596ff8168a39432eb3949fc7c0be952ebb9467806823bffc165d48/kivy-garden-0.1.4.tar.gz
-  Collecting pygments (from Kivy==1.11.1->pypercard)
-    Downloading https://files.pythonhosted.org/packages/be/39/32da3184734730c0e4d3fa3b2b5872104668ad6dc1b5a73d8e477e5fe967/Pygments-2.5.2-py2.py3-none-any.whl (896kB)
-      |████████████████████████████████| 901kB 1.3MB/s
-  Collecting docutils (from Kivy==1.11.1->pypercard)
-    Downloading https://files.pythonhosted.org/packages/81/44/8a15e45ffa96e6cf82956dd8d7af9e666357e16b0d93b253903475ee947f/docutils-0.16-py2.py3-none-any.whl (548kB)
-      |████████████████████████████████| 552kB 2.5MB/s
-  Collecting requests (from Kivy-Garden==0.1.4->pypercard)
-    Downloading https://files.pythonhosted.org/packages/51/bd/23c926cd341ea6b7dd0b2a00aba99ae0f828be89d72b2190f27c11d4b7fb/requests-2.22.0-py2.py3-none-any.whl (57kB)
-      |████████████████████████████████| 61kB 5.3MB/s
-  Collecting idna<2.9,>=2.5 (from requests->Kivy-Garden==0.1.4->pypercard)
-    Downloading https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl (58kB)
-      |████████████████████████████████| 61kB 6.0MB/s
-  Collecting certifi>=2017.4.17 (from requests->Kivy-Garden==0.1.4->pypercard)
-    Downloading https://files.pythonhosted.org/packages/b9/63/df50cac98ea0d5b006c55a399c3bf1db9da7b5a24de7890bc9cfd5dd9e99/certifi-2019.11.28-py2.py3-none-any.whl (156kB)
-      |████████████████████████████████| 163kB 2.3MB/s
-  Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 (from requests->Kivy-Garden==0.1.4->pypercard)
-    Downloading https://files.pythonhosted.org/packages/b4/40/a9837291310ee1ccc242ceb6ebfd9eb21539649f193a7c8c86ba15b98539/urllib3-1.25.7-py2.py3-none-any.whl (125kB)
-      |████████████████████████████████| 133kB 1.5MB/s
-  Collecting chardet<3.1.0,>=3.0.2 (from requests->Kivy-Garden==0.1.4->pypercard)
-    Downloading https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl (133kB)
-      |████████████████████████████████| 143kB 1.5MB/s
-  Installing collected packages: pygments, docutils, idna, certifi, urllib3, chardet, requests, Kivy-Garden, Kivy, pypercard
-    Running setup.py install for Kivy-Garden ... done
-  Successfully installed Kivy-1.11.1 Kivy-Garden-0.1.4 certifi-2019.11.28 chardet-3.0.4 docutils-0.16 idna-2.8 pygments-2.5.2 pypercard-0.0.1a4 requests-2.22.0 urllib3-1.25.7
-  WARNING: You are using pip version 19.2.3, however version 19.3.1 is available.
+  (venv) tibs ~/temp$ pip install requests
+  Collecting requests
+    Using cached https://files.pythonhosted.org/packages/51/bd/23c926cd341ea6b7dd0b2a00aba99ae0f828be89d72b2190f27c11d4b7fb/requests-2.22.0-py2.py3-none-any.whl
+  Collecting idna<2.9,>=2.5 (from requests)
+    Using cached https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl
+  Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 (from requests)
+    Downloading https://files.pythonhosted.org/packages/e8/74/6e4f91745020f967d09332bb2b8b9b10090957334692eb88ea4afe91b77f/urllib3-1.25.8-py2.py3-none-any.whl (125kB)
+      |████████████████████████████████| 133kB 2.6MB/s
+  Collecting certifi>=2017.4.17 (from requests)
+    Using cached https://files.pythonhosted.org/packages/b9/63/df50cac98ea0d5b006c55a399c3bf1db9da7b5a24de7890bc9cfd5dd9e99/certifi-2019.11.28-py2.py3-none-any.whl
+  Collecting chardet<3.1.0,>=3.0.2 (from requests)
+    Using cached https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl
+  Installing collected packages: idna, urllib3, certifi, chardet, requests
+  Successfully installed certifi-2019.11.28 chardet-3.0.4 idna-2.8 requests-2.22.0 urllib3-1.25.8
+  WARNING: You are using pip version 19.2.3, however version 20.0.2 is available.
   You should consider upgrading via the 'pip install --upgrade pip' command.
-
-Hmm. Perhaps something smaller would have been a good idea.
 
 Anyway, that's also given us some good advice. When we create a virtual
 environment, it puts a version of ``pip`` into it for us, but it only knows
@@ -464,54 +516,30 @@ were told:
 
   (venv) tibs ~/temp$ pip install --upgrade pip
   Collecting pip
-    Downloading https://files.pythonhosted.org/packages/00/b6/9cfa56b4081ad13874b0c6f96af8ce16cfbc1cb06bedf8e9164ce5551ec1/pip-19.3.1-py2.py3-none-any.whl (1.4MB)
-      |████████████████████████████████| 1.4MB 1.5MB/s
+    Downloading https://files.pythonhosted.org/packages/54/0c/d01aa759fdc501a58f431eb594a17495f15b88da142ce14b5845662c13f3/pip-20.0.2-py2.py3-none-any.whl (1.4MB)
+      |████████████████████████████████| 1.4MB 2.8MB/s
   Installing collected packages: pip
     Found existing installation: pip 19.2.3
       Uninstalling pip-19.2.3:
         Successfully uninstalled pip-19.2.3
-  Successfully installed pip-19.3.1
+  Successfully installed pip-20.0.2
 
 Let's check what we've done:
 
 .. code:: bash
 
   (venv) tibs ~/temp$ pip --version
-  pip 19.3.1 from /Users/tibs/temp/venv/lib/python3.7/site-packages/pip (python 3.7)
+  pip 20.0.2 from /Users/tibs/temp/venv/lib/python3.7/site-packages/pip (python 3.7)
 
-and to prove we've got the package installed:
+and to prove we've got the ``requests`` package installed:
 
 .. code:: bash
 
-  (venv) tibs ~/temp$ python                                                                                             I
-  Python 3.7.5 (default, Nov  1 2019, 02:16:32)
-  [Clang 11.0.0 (clang-1100.0.33.8)] on darwin
+  (venv) tibs ~/temp$ python
+  Python 3.7.6 (default, Jan 28 2020, 22:16:20)
+  [Clang 11.0.0 (clang-1100.0.33.16)] on darwin
   Type "help", "copyright", "credits" or "license" for more information.
-  >>> import pypercard
-  [WARNING] [Config      ] Older configuration version detected (0 instead of 21)
-  [WARNING] [Config      ] Upgrading configuration in progress.
-  [INFO   ] [Logger      ] Record log in /Users/tibs/.kivy/logs/kivy_20-01-19_0.txt
-  [INFO   ] [Kivy        ] v1.11.1
-  [INFO   ] [Kivy        ] Installed at "/Users/tibs/temp/venv/lib/python3.7/site-packages/kivy/__init__.py"
-  [INFO   ] [Python      ] v3.7.5 (default, Nov  1 2019, 02:16:32)
-  [Clang 11.0.0 (clang-1100.0.33.8)]
-  [INFO   ] [Python      ] Interpreter at "/Users/tibs/temp/venv/bin/python"
-  [INFO   ] [Factory     ] 184 symbols loaded
-  [INFO   ] [Image       ] Providers: img_tex, img_imageio, img_dds, img_sdl2, img_gif (img_pil, img_ffpyplayer ignored)
-  [INFO   ] [Audio       ] Providers: audio_sdl2 (audio_ffpyplayer, audio_avplayer ignored)
-  [INFO   ] [Window      ] Provider: sdl2
-  [INFO   ] [GL          ] Using the "OpenGL ES 2" graphics system
-  [INFO   ] [GL          ] Backend used <sdl2>
-  [INFO   ] [GL          ] OpenGL version <b'2.1 ATI-3.4.19'>
-  [INFO   ] [GL          ] OpenGL vendor <b'ATI Technologies Inc.'>
-  [INFO   ] [GL          ] OpenGL renderer <b'AMD Radeon R9 M295X OpenGL Engine'>
-  [INFO   ] [GL          ] OpenGL parsed version: 2, 1
-  [INFO   ] [GL          ] Shading version <b'1.20'>
-  [INFO   ] [GL          ] Texture max size <16384>
-  [INFO   ] [GL          ] Texture max units <16>
-  [INFO   ] [Window      ] auto add sdl2 input provider
-  [INFO   ] [Window      ] virtual keyboard not allowed, single mode, not docked
-  [INFO   ] [Text        ] Provider: sdl2
+  >>> import requests
   >>>
 
 .. code:: bash
@@ -521,24 +549,24 @@ and to prove we've got the package installed:
 
 As you can see, this puts the prompt back to normal as well.
 
-And also:
+And now we're back to the versions of Python outside the virtual environment:
 
 .. code:: bash
 
   tibs ~/temp$ python --version
   Python 2.7.17
-  tibs ~/temp$                                                                                                           I
+  tibs ~/temp$
   tibs ~/temp$ pip --version
   pip 19.3.1 from /usr/local/lib/python2.7/site-packages/pip (python 2.7)
-  tibs ~/temp$                                                                                                           I
+  tibs ~/temp$
   tibs ~/temp$ python3
-  Python 3.7.5 (default, Nov  1 2019, 02:16:32)
+  Python 3.7.6 (default, Jan 28 2020, 22:16:20)
   [Clang 11.0.0 (clang-1100.0.33.8)] on darwin
   Type "help", "copyright", "credits" or "license" for more information.
-  >>> import pypercard
+  >>> import requests
   Traceback (most recent call last):
     File "<stdin>", line 1, in <module>
-  ModuleNotFoundError: No module named 'pypercard'
+  ModuleNotFoundError: No module named 'requests'
   >>>
 
 In other words, the changes we made in the virtual environment have "gone
@@ -561,20 +589,14 @@ How it works
   tibs ~/temp$ more venv/pyvenv.cfg
   home = /usr/local/bin
   include-system-site-packages = false
-  version = 3.7.5
+  version = 3.7.6
 
 .. code:: bash
 
   tibs ~/temp$ ls -F venv/bin/
-  __pycache__/            pip*                    rst2latex.py*
-  activate                pip3*                   rst2man.py*
-  activate.csh            pip3.7*                 rst2odt.py*
-  activate.fish           pygmentize*             rst2odt_prepstyles.py*
-  chardetect*             python@                 rst2pseudoxml.py*
-  easy_install*           python3@                rst2s5.py*
-  easy_install-3.7*       rst2html.py*            rst2xetex.py*
-  garden*                 rst2html4.py*           rst2xml.py*
-  garden.bat*             rst2html5.py*           rstpep2html.py*
+  activate          chardetect*       pip*              python@
+  activate.csh      easy_install*     pip3*             python3@
+  activate.fish     easy_install-3.7* pip3.7*
 
 .. code:: bash
 
@@ -597,20 +619,15 @@ How it works
 .. code:: bash
 
   tibs ~/temp$ ls -F venv/lib/python3.7/site-packages
-  Kivy-1.11.1.dist-info/                  kivy/
-  Kivy_Garden-0.1.4-py3.7.egg-info/       pip/
-  Pygments-2.5.2.dist-info/               pip-19.3.1.dist-info/
-  __pycache__/                            pkg_resources/
-  certifi/                                pygments/
-  certifi-2019.11.28.dist-info/           pypercard/
-  chardet/                                pypercard-0.0.1a4.dist-info/
-  chardet-3.0.4.dist-info/                requests/
-  docutils/                               requests-2.22.0.dist-info/
-  docutils-0.16.dist-info/                setuptools/
-  easy_install.py                         setuptools-41.2.0.dist-info/
-  garden/                                 urllib3/
-  idna/                                   urllib3-1.25.7.dist-info/
-  idna-2.8.dist-info/
+  __pycache__/                  pip-20.0.2.dist-info/
+  certifi/                      pkg_resources/
+  certifi-2019.11.28.dist-info/ requests/
+  chardet/                      requests-2.22.0.dist-info/
+  chardet-3.0.4.dist-info/      setuptools/
+  easy_install.py               setuptools-41.2.0.dist-info/
+  idna/                         urllib3/
+  idna-2.8.dist-info/           urllib3-1.25.8.dist-info/
+  pip/
 
 By contrast, if I create another virtual environment (``venv2``) and don't
 install anything in it, *its* ``venv2/lib`` looks like:
@@ -622,6 +639,81 @@ install anything in it, *its* ``venv2/lib`` looks like:
   easy_install.py                 setuptools/
   pip/                            setuptools-41.2.0.dist-info/
   pip-19.2.3.dist-info/
+
+Finding out what is installed
+=============================
+
+``pip freeze``
+--------------
+
+Back in the original virtual environment, after installing ``requests``:
+
+.. code:: bash
+
+  tibs ~/temp$ source venv/bin/activate.fish                                              I
+  (venv) tibs ~/temp$ pip freeze                                                          I
+  certifi==2019.11.28
+  chardet==3.0.4
+  idna==2.8
+  requests==2.22.0
+  urllib3==1.25.8
+
+It's called ``freeze`` because this command is originally intended for
+creating a file listing exactly the package versions installed. ``pip`` can
+then be given that text file and reproduce the same installation.
+
+So, for instance:
+
+.. code:: bash
+
+  (venv) tibs ~/temp$ pip freeze > requirements.txt
+
+and then elsewhere, use the same ``requirements.txt`` file:
+
+.. code:: bash
+
+  (venv) tibs ~/temp$ pip install -r requirements.txt
+
+``pipdeptree``
+--------------
+
+https://github.com/naiquevin/pipdeptree
+and https://pypi.org/project/pipdeptree/
+
+This is a very useful package for showing what is installed, and why (i.e.,
+what package needed another package). It can also be very useful for
+diagnosing problems (for instance, if the dependency resolution of ``pip``
+gets confused and it can't work out what versions of what it needs).
+
+.. code:: bash
+
+  tibs ~/temp$ source venv/bin/activate.fish
+  (venv) tibs ~/temp$ pip install pipdeptree
+  Collecting pipdeptree
+    Downloading pipdeptree-0.13.2-py3-none-any.whl (16 kB)
+  Requirement already satisfied: pip>=6.0.0 in ./venv/lib/python3.7/site-packages (from pipdeptree) (20.0.2)
+  Installing collected packages: pipdeptree
+  Successfully installed pipdeptree-0.13.2
+
+and then:
+
+.. code:: bash
+
+  (venv) tibs ~/temp$ pipdeptree
+  pipdeptree==0.13.2
+    - pip [required: >=6.0.0, installed: 20.0.2]
+  requests==2.22.0
+    - certifi [required: >=2017.4.17, installed: 2019.11.28]
+    - chardet [required: >=3.0.2,<3.1.0, installed: 3.0.4]
+    - idna [required: >=2.5,<2.9, installed: 2.8]
+    - urllib3 [required: >=1.21.1,<1.26,!=1.25.1,!=1.25.0, installed: 1.25.8]
+  setuptools==41.2.0
+
+This not only tells us what is installed and at what version, but what
+packages needed it, and what versions they were happy to accept.
+
+There's quite a lot more this tool can do - go and look at the website to see
+its documentation.
 
 Where to put the venv directory
 ===============================
@@ -727,9 +819,27 @@ How do I stop ``pip`` from installing outside a virtual environment?
 
 Quite an important question, actually.
 
-``pip freeze``
-==============
+...
 
+Do I *need* to activate the virtual environment?
+------------------------------------------------
+
+Well, actually, no. It just makes things more convenient. If you run the
+Python in the virtual environment ``bin`` directory (``Scripts`` for Wndows)
+explicitly, then that Python will "look around itself" and use the virtual
+environment.
+
+So:
+
+.. code:: bash
+
+  (venv) tibs ~/temp$ deactivate
+  tibs ~/temp$ venv/bin/python
+  Python 3.7.6 (default, Jan 28 2020, 22:16:20)
+  [Clang 11.0.0 (clang-1100.0.33.16)] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> import requests
+  >>>
 
 The venv directory and version control systems
 ==============================================
@@ -891,7 +1001,17 @@ poetry
 * Python 2 / 3 compatibility and the effects of that
 
 Other things
-============
+------------
+
+These are all things I have not used.
+
+* venv_manager_
+* direnv_
+* upm_
+
+.. _venv_manager: https://github.com/purajit/venv_manager
+.. _direnv: https://direnv.net/
+.. _upm
 
 That dratted ``source``
 =======================
@@ -957,6 +1077,8 @@ problem.
 Python is Python 3;
 
 .. image:: images/ScreenshotWindows0a.png
+   :width: 2418 px
+   :height: 162 px
 
 ::
 
@@ -965,29 +1087,41 @@ Python is Python 3;
 or the same command line as a picture:
   
 .. image:: images/ScreenshotWindows0b.png
+   :width: 988 px
+   :height: 68 px
 
 The new ``venv`` directory is much like that on unix, but there is a
 ``Scripts`` directory, instead of the ``bin`` directory:
 
 .. image:: images/ScreenshowWindows1.png
+   :width: 1272 px
+   :height: 648 px
 
 And as on unix we have a ``pyvenv.cfg`` which describes the virtual
 environment:
            
 .. image:: images/ScreenshotWindows2.png
+   :width: 2690 px
+   :height: 192 px
 
 In the ``Scripts`` directory, we have:
 
 .. image:: images/ScreenshotWindwows3.png
+   :width: 1468 px
+   :height: 948 px
 
 When we ``activate`` (no need for the ``source``), we get the prompt altered,
 just as on unix:
 
 .. image:: images/ScreenshotWindows4.png
+   :width: 1114 px
+   :height: 134 px
 
 We don't yet have ``requests`` installed for this Python:
 
 .. image:: images/ScreenshotWindows5.png
+   :width: 1192 px
+   :height: 358 px
 
 but if we do::
 
@@ -999,12 +1133,18 @@ upgrade pip.
 Now ``requests`` is available:
 
 .. image:: images/ScreenshotWindows6.png
+   :width: 1782 px
+   :height: 232 px
 
 and the ``site-packages`` library in the ``venv`` has gone from:
 
 .. image:: images/ScreenshotWindows7.png
+   :width: 1534 px
+   :height: 696 px
 
 to:
 
 .. image:: images/ScreenshotWindows8.png
+   :width: 1644 px
+   :height: 1208 px
 
