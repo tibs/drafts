@@ -8,8 +8,8 @@ a really good resource.
 https://interrupt.memfault.com/blog/conda-developer-environments - using conda
 
 From ntoll:
-Gu
-   ...PROBLEMS setting up Virtualenv to be used with VSCode on
+
+   ...problems setting up Virtualenv to be used with VSCode on
    Windows. It turns out that if you Google "VSCode Windows Virtualenv"
    this is the top result:
    https://code.visualstudio.com/docs/python/environments which looks
@@ -70,9 +70,6 @@ project, which is much used in scientific Python.
 .. _`Getting started with Python environments (using Conda)`:
    https://towardsdatascience.com/getting-started-with-python-environments-using-conda-32e9f2779307
    
-.. _virtualenv:
-.. _virtualenvwrapper:
-
 -----------------------------------
 
 Other topics:
@@ -492,7 +489,7 @@ even though it's generally very well behaved.
     Using cached https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl
   Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 (from requests)
     Downloading https://files.pythonhosted.org/packages/e8/74/6e4f91745020f967d09332bb2b8b9b10090957334692eb88ea4afe91b77f/urllib3-1.25.8-py2.py3-none-any.whl (125kB)
-      |████████████████████████████████| 133kB 2.6MB/s
+      |||||||||||||||||||||||||||||||||| 133kB 2.6MB/s
   Collecting certifi>=2017.4.17 (from requests)
     Using cached https://files.pythonhosted.org/packages/b9/63/df50cac98ea0d5b006c55a399c3bf1db9da7b5a24de7890bc9cfd5dd9e99/certifi-2019.11.28-py2.py3-none-any.whl
   Collecting chardet<3.1.0,>=3.0.2 (from requests)
@@ -517,7 +514,7 @@ were told:
   (venv) tibs ~/temp$ pip install --upgrade pip
   Collecting pip
     Downloading https://files.pythonhosted.org/packages/54/0c/d01aa759fdc501a58f431eb594a17495f15b88da142ce14b5845662c13f3/pip-20.0.2-py2.py3-none-any.whl (1.4MB)
-      |████████████████████████████████| 1.4MB 2.8MB/s
+      |||||||||||||||||||||||||||||||||| 1.4MB 2.8MB/s
   Installing collected packages: pip
     Found existing installation: pip 19.2.3
       Uninstalling pip-19.2.3:
@@ -809,6 +806,8 @@ Awkward questions
 What happens if create a virtual environment while I've got one activated?
 --------------------------------------------------------------------------
 
+...
+
 Can I (deliberately) create a virtual environment that depends on another?
 --------------------------------------------------------------------------
 
@@ -872,6 +871,10 @@ Related: IDEs
 VSCode
 ------
 
+.. _VSCode: https://code.visualstudio.com/
+
+VSCode_ (Visual Studio Code) ...
+
 If you are editing a Python file, the Python interpreter being used is shown
 at the bottom left of the screen.
 
@@ -897,7 +900,9 @@ If you are working with a "workspace", then it will automatically find a
 PyCharm
 -------
 
-PyCharm always things in terms of "projects". 
+.. _PyCharm: https://www.jetbrains.com/pycharm/
+
+PyCharm_: always thinks in terms of "projects". 
 
 When setting up the Pytho interpreter for use in a PyCharm project, you need
 to specify the full path to the Python executable. So, for instance::
@@ -911,12 +916,20 @@ venv`` style of virtual environment, so you have to help it a bit.)
 Atom
 ----
 
+.. _Atom: https://atom.io/
+
+Atom_ ...
+
 There appear to be more than one packages that support virtual environments
 for Python in atom. I'm assuimg that if you use atom you know your way around
 the package system.
 
 Jupyter notebook
 ----------------
+
+.. _Jupyter: https://jupyter.org/
+
+Jupyter_ notebook ...
 
 The simplest thing to do is to create your virtual environment, then install
 jupyter notebook within it. When you run that jupyter notebook, it will
@@ -965,40 +978,641 @@ Common points:
 virtualenv
 ----------
 
-* Are there particulr benefits (apart, maybe, from not having to remmember
-  ``source``)?
-* How much does it differ from just doing ``python3 -m venv``?
+.. _virtualenv: https://virtualenv.pypa.io
 
-PyCharm support
+virtualenv_ is essentially where Python virtual envrironments all started.
+
+  (Well, actually it looks as if `workingenv 0.1`_ is where it all started,
+  but virtualenv took over in 2007_. And anyway both are by the same author,
+  Ian Bicking.)
+
+.. _`workingenv 0.1`: https://pypi.org/project/workingenv.py/0.1/
+.. _2007: http://www.ianbicking.org/blog/2007/10/workingenv-is-dead-long-live-virtualenv.html
+
+That does mean that if you want virtual environments for Python2 or early
+versions of Python 3, this is still the package to use.
+
+-----------
+
+Back in my ``temp`` directory, but I delete the existing ``venv`` directory.
+
+The command ``virtualenv NAME`` will create a virtual environment called
+``NAME``, using the same Python that was used to install ``virtualenv``.
+
+To get a specific Python, use the ``-p`` (``--python``) switch:
+
+.. code:: bash
+
+  tibs ~/temp$ virtualenv -p python3.7 VENV
+  Running virtualenv with interpreter /usr/local/bin/python3.7
+  Already using interpreter /usr/local/opt/python/bin/python3.7
+  Using base prefix '/usr/local/Cellar/python/3.7.6_1/Frameworks/Python.framework/Versions/3.7'
+  New python executable in /Users/tibs/temp/VENV/bin/python3.7
+  Also creating executable in /Users/tibs/temp/VENV/bin/python
+  Installing setuptools, pip, wheel...
+  done.   
+
+and that has created a directory called ``VENV``, as one might expect:
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F VENV
+  bin/     include/ lib/
+
+There is also a "hidden" file in there, a link:
+
+.. code:: bash
+
+  tibs ~/temp$ ls -l VENV/.Python
+  lrwxr-xr-x  1 tibs  staff  80  1 Feb 16:43 VENV/.Python -> /usr/local/Cellar/python/3.7.6_1/Frameworks/Python.framework/Versions/3.7/Python
+
+Note that there isn't a ``pyenv.cfg`` file - that's a later invention.
+
+The ``bin`` directory looks like:
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F VENV/bin/
+  activate          activate.xsh      pip*              python-config*
+  activate.csh      activate_this.py  pip3*             python3@
+  activate.fish     easy_install*     pip3.7*           python3.7*
+  activate.ps1      easy_install-3.7* python@           wheel*
+
+Once you've created the virtual environment, it works much as the ``venv``
+style virtual environment - in particular, you activate and deactivate it in
+the same way.
+
+The virtualenv_ documentation contains information__ on how it relates to the
+``venv`` provided by Python 3.3 and later. You can probably ignore that unless
+you're trying to nest virtual environments of the two types, or are trying to
+write Python code to manage both sorts of virtual environments.
+
+.. __: https://virtualenv.pypa.io/en/latest/reference/#compatibility-with-the-stdlib-venv-module
+
+As one might expect, virtualenv_ also works on Windows.
+
+PyCharm_ assumes that you use virtualenv_ to manage your virtual environments.
+
+My recommendation: unless you have good reason to use virtualenv_, just use
+``python3 -m venv``.
+
+(NB: install with ``pip`` or your system package manager. That first is
+something of a bootstrap problem, which is probably a big part of why ``venv``
+got added to Python 3 - that and the fact that virtual environments are now a
+standard thing, which they clearly weren't when virtualenv_ was invented.)
 
 virtualenvwrapper
 -----------------
 
-``mkvirtualenv``
+.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io
 
+virtualenvwrapper_ is a wrapper for virtualenv_ (well, it's in the name!) that
+aims to make it easier to use, by providing some extra commands.
+
+Once you've installed it, there's a degree of manual setup, although it's
+reasonable clearly explained in the documentation.
+
+Once you've set it up, it will:
+
+1. Allow you to keep all of your virtual environment directories under one
+   single directory - typically something like ``$HOME/.virtualenvs``.
+2. Provide a new command, ``mkvirtualenv`` to create new virtual
+   environments.
+3. Provide a command ``workon`` that lets you change to a (different) virtual
+   environment.
+
+So, for instance, I might do:
+
+.. code:: bash
+
+  tibs ~/temp$ mkvirtualenv use-requests
+
+which would create me a virtual environment directory::
+
+  /Users/tibs/.virtualenvs/use-requests
+
+The *content* of that directory would be the same as if it had been created
+directly using virtualenv_.
+
+To *use* that virtual environment, I would just use the ``workon`` command:
+
+.. code:: bash
+
+  tibs ~/temp$ workon use-requests
+  (use-requests) tibs ~/temp$
+
+To change to another virtual environment (created with ``mkvirtualenv``) I can
+use the ``workon`` command with the name of that new virtual environment - it
+will ``deactivate`` and then activate the new environment for me.
+
+And, of course, because it is still a virtualenv_ environment, I can
+``deactivate`` by hand if I wish:
+.. code:: bash
+
+  (use-requests) tibs ~/temp$ deactivate
+  tibs ~/temp$
+
+Notes:
+
+* virtualenvwrapper_ is (mostly) a set of shell scripts, written in bash, ksh
+  and zsh, so it won't work outside those environments (even though
+  virtualenv_ does). However, if you really want a virtualenv_ wrapper, other
+  people have written similar things;
+
+  * For Windows, there is `virtualenvwrapper-win`_ which says it works in
+    CMD.EXE, but not in Powershell
+  * For the fish shell (which I use), there's virtualfish_
+
+* I *have* used virtualenvwrapper_ in the past, but nowadays I just use the
+  ``venv`` support in modern Python 3.
+
+* virtualenvwrapper_ is installed with pip, so some of the same comments as
+  for virtualenv_ apply.
+
+.. _`virtualenvwrapper-win`: https://pypi.org/project/virtualenvwrapper-win/
+.. _virtualfish: https://github.com/excitedleigh/virtualfish
+  
 pipenv
 ------
 
-``pipenv init`` and ``pipenv shell``
+.. _pipenv: https://pipenv.readthedocs.io/
 
-* where it keeps the virtual environment, and how it names it
-* does it work on windows?
-* its intended purpose
-* conformity with the future of Python packaging (toml files)
-* Python 2 / 3 compatibility and the effects of that
+pipenv_ aims to make using virtual environments easier, but also to help with
+package management for a project as well.
 
-and for pipenv in particular, the "political" history
+(Note that pipenv uses some odd characters in its output, to try to be
+"amusing". Which is nice enough, but I've had to replace them with ``?`` in
+this file.)
+
+To start using it:
+
+.. code:: bash
+
+  tibs ~/temp$ cd ~/temp
+  tibs ~/temp$ pipenv install --python 3.7
+  Creating a virtualenv for this project…
+  Pipfile: /Users/tibs/temp/Pipfile
+  Using /usr/local/bin/python3 (3.7.6) to create virtualenv…
+  ? Creating virtual environment...Already using interpreter /usr/local/opt/python/bin/python3.7
+  Using base prefix '/usr/local/Cellar/python/3.7.6_1/Frameworks/Python.framework/Versions/3.7'
+  New python executable in /Users/tibs/.local/share/virtualenvs/temp--1EXmzEU/bin/python3.7
+  Also creating executable in /Users/tibs/.local/share/virtualenvs/temp--1EXmzEU/bin/python
+  Installing setuptools, pip, wheel...
+  done.
+  Running virtualenv with interpreter /usr/local/bin/python3
+
+  ? Successfully created virtual environment!
+  Virtualenv location: /Users/tibs/.local/share/virtualenvs/temp--1EXmzEU
+  Creating a Pipfile for this project…
+  Pipfile.lock not found, creating…
+  Locking [dev-packages] dependencies…
+  Locking [packages] dependencies…
+  Updated Pipfile.lock (a65489)!
+  Installing dependencies from Pipfile.lock (a65489)…
+  ? |||||||||||||||||||||||||||||||| 0/0 — 00:00:00
+  To activate this project's virtualenv, run pipenv shell.
+  Alternatively, run a command inside the virtualenv with pipenv run.
+
+As it says, this has put a new virtual environment in a "standard" place,
+which on unix is ``~/.local/share/virtualenvs``. It has also automatically
+named that virtual environment, using the current directory name and a unique
+hash code.
+
+If I look in that directory:
+
+.. code:: bash
+
+  (temp) tibs ~/temp$ ls -aF ~/.local/share/virtualenvs/temp--1EXmzEU/
+  ./        ../       .Python@  .project  bin/      include/  lib/
+
+then I can see that this is a virtualenv_ style virtual environment, not a
+``venv`` style.
+
+It has also created two files in the current directory:
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F
+  Pipfile       Pipfile.lock
+
+The ``Pipfile`` gives a description of the newly created virtual environment::
+
+  [[source]]
+  name = "pypi"
+  url = "https://pypi.org/simple"
+  verify_ssl = true
+
+  [dev-packages]
+
+  [packages]
+
+  [requires]
+  python_version = "3.7"
+
+and the ``Pipfile.lock`` gets more specific and less human-readable::
+
+  {
+      "_meta": {
+          "hash": {
+              "sha256": "7e7ef69da7248742e869378f8421880cf8f0017f96d94d086813baa518a65489"
+          },
+          "pipfile-spec": 6,
+          "requires": {
+              "python_version": "3.7"
+          },
+          "sources": [
+              {
+                  "name": "pypi",
+                  "url": "https://pypi.org/simple",
+                  "verify_ssl": true
+              }
+          ]
+      },
+      "default": {},
+      "develop": {}
+  }
+
+The normal way to use the virtual environment is then (as it suggests) to do:
+
+.. code:: bash
+
+  tibs ~/temp$ pipenv shell                                                               I
+  Launching subshell in virtual environment…
+  Welcome to fish, the friendly interactive shell
+  tibs ~/temp$  source /Users/tibs/.local/share/virtualenvs/temp--1EXmzEU/bin/activate.fish
+
+  (temp) tibs ~/temp$
+  
+This actually starts a new shell with the virtual environment enabled in it.
+
+(So, to get out of the environment, I just use ``CTRL-D`` or ``exit`` as I
+normally would to get out of a unix subshell.)
+
+With pipenv_, I use it (and not ``pip``) to install new packages:
+
+.. code:: bash
+
+  (temp) tibs ~/temp$ pipenv install requests
+  Installing requests…
+  Adding requests to Pipfile's [packages]…
+  ? Installation Succeeded
+  Pipfile.lock (444a6d) out of date, updating to (a65489)…
+  Locking [dev-packages] dependencies…
+  Locking [packages] dependencies…
+  ? Success!
+  Updated Pipfile.lock (444a6d)!
+  Installing dependencies from Pipfile.lock (444a6d)…
+  ? |||||||||||||||||||||||||||||||| 5/5 — 00:00:00
+
+Now the ``Pipfile`` and ``Pipfile.lock`` have been updated - the ``Pipfile``
+to::
+
+  [[source]]
+  name = "pypi"
+  url = "https://pypi.org/simple"
+  verify_ssl = true
+
+  [dev-packages]
+
+  [packages]
+  requests = "*"
+
+  [requires]
+  python_version = "3.7"
+
+and the ``Pipfile.lock`` to something rather longer and more complicated, but
+which basically uniquely identifies the packages that were installed.
+
+The ``Pipfile.lock`` is intended to contain all the information that is needed
+to recreate exactly this virtual environment. If there is a ``Pipfile.lock``
+in a directory, and you give the ``pipenv install`` command with no packages,
+it will set up the virtual environment to match that described in the lock
+file.
+
+
+Notes:
+
+* This all works on Windows 10 as well.
+
+* pipenv_ has always worked with Python 2 and Python 3, and took the decision
+  to use virtualenv_ environments for both. I don't know if it will ever move
+  towards supporting ``venv`` environments instead.
+
+* If you have a ``requirements.txt`` file in the current directory (the one
+  in which you are running ``pipenv install``) or its parent(s), then pipenv_
+  will try to use it to set up your environment. That can be surprising if
+  the file is *not* one you meant to use for this purpose!
+
+* You *can* use ``pip install`` inside a pipenv_ virtual environment, and it
+  will install the package you ask for, but it won't update the ``Pipfile`` or
+  ``Pipfile.lock``. I've fallen over that more than once in the past.
+
+* There is some slightly complicated political history to the pipenv_ project.
 
 poetry
 ------
 
-``poetry init`` and ``poetry shell``
+.. _poetry: https://python-poetry.org/
 
-* where it keeps the virtual environment, and how it names it
-* does it work on windows?
-* its intended purpose
-* conformity with the future of Python packaging (toml files)
-* Python 2 / 3 compatibility and the effects of that
+.. epigraph::
+
+  I built Poetry because I wanted a single tool to manage my Python projects
+  from start to finish. I wanted something reliable and intuitive that the
+  community could use and enjoy.
+
+  -- Sébastien Eustace
+
+If you want to create a new project, then the ``poetry new`` command will
+create the project directory and a sensible starting layout.
+
+I don't really want to go quite that far (although actually it's a good idea
+in general), so I shall just use ``poetry init`` to get started. This takes
+the user through some questions to generate the ``pyproject.toml`` file that
+poetry requires:
+
+.. code:: bash
+
+  tibs ~/temp$ poetry init
+
+  This command will guide you through creating your pyproject.toml config.
+
+  Package name [temp]:
+  Version [0.1.0]:
+  Description []:
+  Author [Tibs <tibs@tonyibbs.co.uk>, n to skip]:
+  License []:  MIT
+  Compatible Python versions [^3.7]:
+
+  Would you like to define your main dependencies interactively? (yes/no) [yes] no
+  Would you like to define your dev dependencies (require-dev) interactively (yes/no) [yes] no
+  Generated file
+
+  [tool.poetry]
+  name = "temp"
+  version = "0.1.0"
+  description = ""
+  authors = ["Tibs <tibs@tonyibbs.co.uk>"]
+  license = "MIT"
+
+  [tool.poetry.dependencies]
+  python = "^3.7"
+
+  [tool.poetry.dev-dependencies]
+
+  [build-system]
+  requires = ["poetry>=0.12"]
+  build-backend = "poetry.masonry.api"
+
+
+  Do you confirm generation? (yes/no) [yes]
+
+and the resultant file looks like::
+
+  [tool.poetry]
+  name = "temp"
+  version = "0.1.0"
+  description = ""
+  authors = ["Tibs <tibs@tonyibbs.co.uk>"]
+  license = "MIT"
+
+  [tool.poetry.dependencies]
+  python = "^3.7"
+
+  [tool.poetry.dev-dependencies]
+
+  [build-system]
+  requires = ["poetry>=0.12"]
+  build-backend = "poetry.masonry.api"
+
+As you can see, that files specifies what version of Python I need (I think
+it's just a regular expression indicating any Python 3.7)
+
+So now I can create my virtual environment:
+
+.. code:: bash
+
+  tibs ~/temp$ poetry install
+  Creating virtualenv temp-PD0d5gaI-py3.7 in /Users/tibs/Library/Caches/pypoetry/virtualenvs
+  Updating dependencies
+  Resolving dependencies... (0.1s)
+
+  Writing lock file
+
+  No dependencies to install or update
+
+Where the virtual environment directory goes is dependent on the operating
+system. On a Mac, ``~/Library/Caches`` is a fairly traditional sort of place.
+
+And if we look there::
+
+.. code:: bash
+
+  tibs ~/temp$ ls -aF /Users/tibs/Library/Caches/pypoetry/virtualenvs/temp-PD0d5gaI-py3.7/
+  ./          ../         bin/        include/    lib/        pyvenv.cfg
+          
+which tells us we've created a (modern) ``venv`` virtual environment. The name
+of the virtual environment includes our starting directory name, a hash, and
+the version of Python.
+
+Meanwhile, in the current directory, we have:
+
+.. code:: bash
+
+  tibs ~/temp$ ls -F
+  poetry.lock     pyproject.toml
+
+The ``pyproject.toml`` hasn't changed, and the ``poetry.lock`` contains::
+
+  package = []
+
+  [metadata]
+  content-hash = "669741988c507fb04697bdb0c9077fa1b2342c356df6ae6c96baa3119a96a9ea"
+  python-versions = "^3.7"
+
+  [metadata.files]
+
+We get into our virtual environment by starting a new shell using it:
+
+.. code:: bash
+
+  tibs ~/temp$ poetry shell
+  Spawning shell within /Users/tibs/Library/Caches/pypoetry/virtualenvs/temp-PD0d5gaI-py3.7
+  Welcome to fish, the friendly interactive shell
+  tibs ~/temp$ source /Users/tibs/Library/Caches/pypoetry/virtualenvs/temp-PD0d5gaI-py3.7/bin/activate.fish
+  (temp-PD0d5gaI-py3.7) tibs ~/temp$
+
+which should look fairly familiar. And that means we get out by using ``exit``
+or ``CTRL-D`` to leave the subshell.
+
+To add a new package, we use ``poetry add``:
+
+.. code:: bash
+
+  (temp-PD0d5gaI-py3.7) tibs ~/temp$ poetry add requests                                  I
+  Using version ^2.22.0 for requests
+
+  Updating dependencies
+  Resolving dependencies... (1.0s)
+
+  Writing lock file
+
+
+  Package operations: 0 installs, 5 updates, 0 removals
+
+    - Updating certifi (2019.11.28 /usr/local/Cellar/poetry/1.0.3/libexec/vendor/lib/python3.7/site-packages -> 2019.11.28)
+    - Updating chardet (3.0.4 /usr/local/Cellar/poetry/1.0.3/libexec/vendor/lib/python3.7/site-packages -> 3.0.4)
+    - Updating idna (2.8 /usr/local/Cellar/poetry/1.0.3/libexec/vendor/lib/python3.7/site-packages -> 2.8)
+    - Updating urllib3 (1.25.8 /usr/local/Cellar/poetry/1.0.3/libexec/vendor/lib/python3.7/site-packages -> 1.25.8)
+    - Updating requests (2.22.0 /usr/local/Cellar/poetry/1.0.3/libexec/vendor/lib/python3.7/site-packages -> 2.22.0)
+
+Now I can import ``requests``.
+
+The ``pyproject.toml`` now lists ``requests``::
+
+  [tool.poetry]
+  name = "temp"
+  version = "0.1.0"
+  description = ""
+  authors = ["Tibs <tibs@tonyibbs.co.uk>"]
+  license = "MIT"
+
+  [tool.poetry.dependencies]
+  python = "^3.7"
+  requests = "^2.22.0"
+
+  [tool.poetry.dev-dependencies]
+
+  [build-system]
+  requires = ["poetry>=0.12"]
+  build-backend = "poetry.masonry.api"
+
+and the ``poetry.lock`` also specifies the dependencies for ``requests``::
+
+  [[package]]
+  category = "main"
+  description = "Python package for providing Mozilla's CA Bundle."
+  name = "certifi"
+  optional = false
+  python-versions = "*"
+  version = "2019.11.28"
+
+  [[package]]
+  category = "main"
+  description = "Universal encoding detector for Python 2 and 3"
+  name = "chardet"
+  optional = false
+  python-versions = "*"
+  version = "3.0.4"
+
+  [[package]]
+  category = "main"
+  description = "Internationalized Domain Names in Applications (IDNA)"
+  name = "idna"
+  optional = false
+  python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+  version = "2.8"
+
+  [[package]]
+  category = "main"
+  description = "Python HTTP for Humans."
+  name = "requests"
+  optional = false
+  python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+  version = "2.22.0"
+
+  [package.dependencies]
+  certifi = ">=2017.4.17"
+  chardet = ">=3.0.2,<3.1.0"
+  idna = ">=2.5,<2.9"
+  urllib3 = ">=1.21.1,<1.25.0 || >1.25.0,<1.25.1 || >1.25.1,<1.26"
+
+  [package.extras]
+  security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)"]
+  socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
+
+  [[package]]
+  category = "main"
+  description = "HTTP library with thread-safe connection pooling, file post, and more."
+  name = "urllib3"
+  optional = false
+  python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+  version = "1.25.8"
+
+  [package.extras]
+  brotli = ["brotlipy (>=0.6.0)"]
+  secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
+  socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+
+  [metadata]
+  content-hash = "c68b73b166d0ac88096f038dc3b8ab730dc56bdbea7d02ec26a3187fc89ec774"
+  python-versions = "^3.7"
+
+  [metadata.files]
+  certifi = [
+      {file = "certifi-2019.11.28-py2.py3-none-any.whl", hash = "sha256:017c25db2a153ce562900032d5bc68e9f191e44e9a0f762f373977de9df1fbb3"},
+      {file = "certifi-2019.11.28.tar.gz", hash = "sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f"},
+  ]
+  chardet = [
+      {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
+      {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
+  ]
+  idna = [
+      {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
+      {file = "idna-2.8.tar.gz", hash = "sha256:c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407"},
+  ]
+  requests = [
+      {file = "requests-2.22.0-py2.py3-none-any.whl", hash = "sha256:9cf5292fcd0f598c671cfc1e0d7d1a7f13bb8085e9a590f48c010551dc6c4b31"},
+      {file = "requests-2.22.0.tar.gz", hash = "sha256:11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4"},
+  ]
+  urllib3 = [
+      {file = "urllib3-1.25.8-py2.py3-none-any.whl", hash = "sha256:2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc"},
+      {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
+  ]
+
+Notes:
+
+* poetry_ is somewhat similar to pipenv_, but its overall aims are not quite
+  the same - in particular:
+
+  * it aims to help with more of the steps of devloping a new package (for
+    instance, ``poetry publish`` will publish to PyPi_
+
+  * the project maintainers seem to want to track the future of "official"
+    Python package management, which is in part why the configuration files
+    take the form they do.
+
+* poetry_ is supported on Windows 10, but I'm not sure if only in Powershell.
+
+* TOML_ (according to its home page) "aims to be a minimal configuration file
+  format that's easy to read due to obvious semantics. TOML is designed to map
+  unambiguously to a hash table. TOML should be easy to parse into data
+  structures in a wide variety of languages."
+
+* The PEPs relating to the future of Python packaging are also using the
+  ``pyproject.toml`` file, so poetry is trying to build on the same
+  infrastructure.
+
+
+.. _PyPi: https://pypi.org/
+.. _toml: https://github.com/toml-lang/toml
+
+conda
+-----
+
+.. _conda: https://conda.io/
+.. _miniconda: https://conda.io/en/latest/miniconda.html
+
+conda_ comes out of the Anaconda_ project, which started as a means of
+providing easy installation of scientific/numeric Python on Windows. It's now
+a lot more than that, but still aimed at the scientific / big data worlds.
+
+I don't know much about conda_, because I've never used it.
+
+* if you've got anaconda, you're already using this - so just keep doing so
+* support for many different languages
+* there is miniconda_ which is ``conda`` without *all* of the packages - this
+  is closer to just using ``pip``.
+
 
 Other things
 ------------
@@ -1009,17 +1623,25 @@ These are all things I have not used.
 * direnv_
 * upm_
 
+  A "universal package manager", which is meant to act as a consistent front
+  end (command line tool) for various different programming languages. For
+  Python it wraps poetry_
+
 .. _venv_manager: https://github.com/purajit/venv_manager
 .. _direnv: https://direnv.net/
-.. _upm
+.. _upm: https://github.com/replit/upm
 
 That dratted ``source``
 =======================
 
 As I said earlier, it can be hard to remember that you have to ``source`` the
-activation script on unices. You can get around that by defining a shell
-function to do the work instead. In fish, this is as simple as creating a file
-called ``~/.config/fish/functions/workon.fish`` that contains::
+activation script on unices. And this was clearly one of the reasons for the
+creation of virtualenvwrapper_.
+
+If you're happy programming your (unix) shell, you can get around this by
+creating a shell function to do the work instead. In fish, this is as simple
+as creating a file called ``~/.config/fish/functions/workon.fish`` that
+contains::
 
   function workon --description "Activate Python virtualenv for named environment"
 
@@ -1049,9 +1671,6 @@ called ``~/.config/fish/functions/workon.fish`` that contains::
 although clearly there are a lot of assumptions baked into that particular
 function!
 
-Bash functions aren't as nice, but should still (**check**) be able to do a
-similar job.
-
 On the whole, though, it's really just as easy to do it the longer way.
 
 Windows virtual machine
@@ -1063,6 +1682,9 @@ Windows virtual machine
    * first pet's name: first
    * city where I was born: city
    * first school: school
+
+   And yes, those are stupid, and no, I don't use them anywhere else (!),
+   which is why I'm happy putting them on github!
 
 The version of Windows I got as a trial version was not recent enough to
 prompt me to get Python when I typed ``python`` at the CMD.EXE prompt, so I
@@ -1079,6 +1701,7 @@ Python is Python 3;
 .. image:: images/ScreenshotWindows0a.png
    :width: 2418 px
    :height: 162 px
+   :scale: 50%
 
 ::
 
@@ -1089,13 +1712,15 @@ or the same command line as a picture:
 .. image:: images/ScreenshotWindows0b.png
    :width: 988 px
    :height: 68 px
+   :scale: 50%
 
 The new ``venv`` directory is much like that on unix, but there is a
 ``Scripts`` directory, instead of the ``bin`` directory:
 
-.. image:: images/ScreenshowWindows1.png
+.. image:: images/ScreenshotWindows1.png
    :width: 1272 px
    :height: 648 px
+   :scale: 50%
 
 And as on unix we have a ``pyvenv.cfg`` which describes the virtual
 environment:
@@ -1103,12 +1728,14 @@ environment:
 .. image:: images/ScreenshotWindows2.png
    :width: 2690 px
    :height: 192 px
+   :scale: 50%
 
 In the ``Scripts`` directory, we have:
 
-.. image:: images/ScreenshotWindwows3.png
+.. image:: images/ScreenshotWindows3.png
    :width: 1468 px
    :height: 948 px
+   :scale: 50%
 
 When we ``activate`` (no need for the ``source``), we get the prompt altered,
 just as on unix:
@@ -1116,12 +1743,14 @@ just as on unix:
 .. image:: images/ScreenshotWindows4.png
    :width: 1114 px
    :height: 134 px
+   :scale: 50%
 
 We don't yet have ``requests`` installed for this Python:
 
 .. image:: images/ScreenshotWindows5.png
    :width: 1192 px
    :height: 358 px
+   :scale: 50%
 
 but if we do::
 
@@ -1135,16 +1764,19 @@ Now ``requests`` is available:
 .. image:: images/ScreenshotWindows6.png
    :width: 1782 px
    :height: 232 px
+   :scale: 50%
 
 and the ``site-packages`` library in the ``venv`` has gone from:
 
 .. image:: images/ScreenshotWindows7.png
    :width: 1534 px
    :height: 696 px
+   :scale: 50%
 
 to:
 
 .. image:: images/ScreenshotWindows8.png
    :width: 1644 px
    :height: 1208 px
+   :scale: 50%
 
