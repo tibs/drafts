@@ -2,116 +2,8 @@
 An introduction to Python virtual environments
 ==============================================
 
-https://www.pluralsight.com/tech-blog/managing-python-environments/ looks like
-a really good resource.
-
-https://interrupt.memfault.com/blog/conda-developer-environments - using conda
-
-From ntoll:
-
-   ...problems setting up Virtualenv to be used with VSCode on
-   Windows. It turns out that if you Google "VSCode Windows Virtualenv"
-   this is the top result:
-   https://code.visualstudio.com/docs/python/environments which looks
-   exactly like what she needs to read.
-
-https://www.b-list.org/weblog/2020/jan/05/packaging/ - A Python Packaging
-Carol "Quite often, I see people being wrong on the internet about Python
-packaging. But the way in which they’re wrong is subtle, and often passes
-unnoticed. The issue with much of the discussion is in conflating multiple
-different things under the term “packaging”, and failing to be clear exactly
-which of them is being discussed or criticized. In the spirit of Dickens, I’d
-like to break up the concept of “packaging” into at least three different
-topics, each associated with a specific use case, and then talk a bit about
-each of them"
-
-Links
-=====
-
-Official documentation:
-
-* `Creating Virtual Environments`_ in the `Python Packaging User Guide`_
-* `venv - Creation of virtual environments`_ in the Python library documentation
-* `Virtual Environments and Packages`_ in the Python tutorial
-
-.. _`Creating Virtual Environments`:
-    https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments
-.. _`Python Packaging User Guide`:
-    https://packaging.python.org/tutorials/installing-packages
-.. _`venv - Creation of virtual environments`: https://docs.python.org/3/library/venv.html
-.. _`Virtual Environments and Packages`: https://docs.python.org/3/tutorial/venv.html
-
-Other interesting pages:
-
-* `An Effective Python Environment: Making Yourself at Home`_, at `Real Python`_
-* `A Guide to Python Virtual Environments with virtualenvwrapper`_
-* `How to create a Python 3 virtual environment in Windows 10`_
-* `Virtual Environments`_ at `The Hitchhiker's Guide to Python`_, which shows
-  how to use `virtualenv`_ and `virtualenvwrapper`_
-  
-.. _`An Effective Python Environment: Making Yourself at Home`:
-   https://realpython.com/effective-python-environment/
-.. _`Real Python`: https://realpython.com
-.. _`A Guide to Python Virtual Environments with virtualenvwrapper`:
-   https://howchoo.com/g/nwewzjmzmjc/a-guide-to-python-virtual-environments-with-virtualenvwrapper
-.. _`How to create a Python 3 virtual environment in Windows 10`:
-   https://www.techcoil.com/blog/how-to-create-a-python-3-virtual-environment-in-windows-10/
-.. _`Virtual Environments`: https://python-guide-ru.readthedocs.io/en/latest/dev/virtualenvs.html
-.. _`The Hitchhiker's Guide to Python`: https://python-guide-ru.readthedocs.io/
-
-
-I don't talk about using ``conda`` here, but it's an alternative to the normal
-Python virtual environment mechanisms that was introduced by the Anaconda_
-project, which is much used in scientific Python.
-
-* `Getting started with Python environments (using Conda)`_
-
-.. _Anaconda: https://anaconda.org/
-.. _`Getting started with Python environments (using Conda)`:
-   https://towardsdatascience.com/getting-started-with-python-environments-using-conda-32e9f2779307
+.. contents::
    
------------------------------------
-
-Other topics:
-
-* pycharm
-* vscode
-* jupyter notebook
-* conda (see above)
-* pyenv
-* pideptree https://pypi.org/project/pipdeptree/ https://github.com/naiquevin/pipdeptree
-* virtualenvwrapper (and why I no longer use it). Note to warn that it was
-  built for Python 2 originally, and ``mkvirtualenv`` may not work quite the
-  same way as ``python3 -m venv``.
-* direnv https://direnv.net/ (and perhaps also https://github.com/purajit/venv_manager)
-* pipenv
-* poetry
-* other approachs:
-
-  * https://github.com/replit/upm
-  * what else?
-
------------------------------------
-
-Why one needs to do this
-
-How one does this
-
-What it does / how it works
-
-How to use it
-
-* "project" - one venv per directory tree
-* ??? - one venv per purpose
-
-Related: IDEs
-  
-Related: multiple Pythons
-
-Related: wrapper tools
-
------------------------------------
-
 Why do we need virtual environments
 ===================================
 
@@ -201,42 +93,42 @@ don't overlap much. There's no particular reason to have the unnecessary
 packages available, and if we constrain our workspace a bit, it makes it
 easier to reason about problems when they do occur.
 
-Keeping track
--------------
-Need a better name for this one.
+Managing dependencies
+---------------------
 
 A virtual environment lets you be explicit about what you have installed, and
 that makes it easier to produce a proper package when you're developing.
 
 ``pip freeze`` and ``pipdeptree``
 
-An example
-----------
+Actual use cases
+----------------
 
 At our January meeting, we were told about ``pypercard``, which is a very nice
 package, but has quite a few dependencies. If I want to play with it, then I
 probably don't want to "splash" those dependencies all over my normal working
 environment, especially if I'm also doing actual work with Python.
 
-How one does this
-=================
+At work, we had two Pyton programs we needed to use in our build chain, but
+they had incompatible version requirements of support libraries. The solution
+was to use a different virtual environment for each.
 
-Note on examples: I shall give examples for "unix" and for Windows. For the
-first, "unix" should include most common Linux distributions, and also the
-BSDs and Mac OS. I assume your shell is something like bash or zsh or even
-fish. For Windows, I assume Windows 10, and I assume your shell is CMD.EXE or
-Powershell - I believe either should be OK. My experience is more limited for
-Windows, but I shall include actual screenshots.
+Also at work, we wanted to know exactly which packages were needed for a
+particular project. Again, running in a virtual environment meant we could
+easily list the required packages, what version we had installed, and what
+packages had been installed automatically as dependencies of other packages.
 
-For the moment, just
+The Examples
+============
 
-What it does / how it works
-===========================
+In general, where I say "unix", that should include most common Linux
+distributions, and also the BSDs and Mac OS. I assume your shell is something
+like bash or zsh or even fish. For Windows, I assume Windows 10, and I assume
+your shell is CMD.EXE or Powershell - I believe either should be OK. My
+experience is more limited for Windows, but I shall include actual
+screenshots.
 
-Examples
---------
-
-The unix examples are from my Mac at home. They text is cut-and-pasted from
+The unix examples are from my Mac at home. The text is cut-and-pasted from
 my terminal.
 
 When you see ``tibs ~$`` (or something similar) at the start of a line, that
@@ -246,6 +138,17 @@ type the stuff after the ``$`` (and the space that follows it).
 For Windows, I've run Windows 10 in a virtual machine, and made screenshots.
 Apologies for those - this seemed the simplest way to do it. I'll mostly only
 talk about Windows when I'm talking about its differences from unix.
+
+I *have* tried all the ``venv`` examples on Windows, and I've installed and
+checked poetry_.
+
+``python3 -m venv``
+===================
+
+We're going to start by looking at the "official" way of creating and using
+virtual environments, as of Python 3.3.
+
+But first some preparation.
 
 Make a working directory
 ------------------------
@@ -800,180 +703,8 @@ take a variety of arguments, and even has help:
   Once an environment has been created, you may wish to activate it, e.g. by
   sourcing an activate script in its bin directory.
 
-Awkward questions
-=================
-
-What happens if create a virtual environment while I've got one activated?
---------------------------------------------------------------------------
-
-...
-
-Can I (deliberately) create a virtual environment that depends on another?
---------------------------------------------------------------------------
-
-Yes.
-
-How do I stop ``pip`` from installing outside a virtual environment?
---------------------------------------------------------------------
-
-Quite an important question, actually.
-
-...
-
-Do I *need* to activate the virtual environment?
-------------------------------------------------
-
-Well, actually, no. It just makes things more convenient. If you run the
-Python in the virtual environment ``bin`` directory (``Scripts`` for Wndows)
-explicitly, then that Python will "look around itself" and use the virtual
-environment.
-
-So:
-
-.. code:: bash
-
-  (venv) tibs ~/temp$ deactivate
-  tibs ~/temp$ venv/bin/python
-  Python 3.7.6 (default, Jan 28 2020, 22:16:20)
-  [Clang 11.0.0 (clang-1100.0.33.16)] on darwin
-  Type "help", "copyright", "credits" or "license" for more information.
-  >>> import requests
-  >>>
-
-The venv directory and version control systems
-==============================================
-
-Broadly, don't commit the ``venv`` directory to your version control
-system. It doesn't contain anything portable (by definition).
-
-If you're using git, then you may want to add a rule to your ``.gitignore``
-file - for instance::
-
-  /venv/
-
-(altering to match the actual name of the directory).
-
-
-  **Is the next bit good advice?**
-  
-  *However* if your git repository is shared with anyone else, you might not
-  want to assume that everyone uses the same venv directory name. In that case,
-  it may be to put it into a top-level ``.gitignore`` (e.g., ``~/.gitignore``)
-  instead.
-
-The ``--system-site-packages`` switch
-=====================================
-
-
-Related: IDEs
-=============
-
-VSCode
-------
-
-.. _VSCode: https://code.visualstudio.com/
-
-VSCode_ (Visual Studio Code) ...
-
-If you are editing a Python file, the Python interpreter being used is shown
-at the bottom left of the screen.
-
-If you click on that, then you will be shown a list of available Python
-interpreters, and that will include those provided by your virtual
-environments.
-
-The page https://code.visualstudio.com/docs/python/environments explains how
-it decides where to look, and also how to specify a Python interpreter that it
-cannout automatically find.
-
-If you are working with a "workspace", then it will automatically find a
-``.venv`` directory in that workspace.
-
-.. note:: To add new locations to look for virtual environments, go to the
-   Settings in VSCode and search for "virtual". This seems to allow setting
-   particular directories in your home directory, or specific directories
-   elsewhere.
-
-   .. image:: images/vscode-venv-folders.png
-
-
-PyCharm
--------
-
-.. _PyCharm: https://www.jetbrains.com/pycharm/
-
-PyCharm_: always thinks in terms of "projects". 
-
-When setting up the Pytho interpreter for use in a PyCharm project, you need
-to specify the full path to the Python executable. So, for instance::
-
-  ~/tibs/temp/venv/bin/python3
-
-(When I'm writing this (January 2020), PyCharm has explicit support for conda
-and the older ``virtualenv`` mechanism, but not for the modern ``python3 -m
-venv`` style of virtual environment, so you have to help it a bit.)
-
-Atom
-----
-
-.. _Atom: https://atom.io/
-
-Atom_ ...
-
-There appear to be more than one packages that support virtual environments
-for Python in atom. I'm assuimg that if you use atom you know your way around
-the package system.
-
-Jupyter notebook
-----------------
-
-.. _Jupyter: https://jupyter.org/
-
-Jupyter_ notebook ...
-
-The simplest thing to do is to create your virtual environment, then install
-jupyter notebook within it. When you run that jupyter notebook, it will
-automatically use the Python it was installed for.
-
-For instance::
-
-  $ source .venv/bin/activate
-  $ pip install jupyter
-  $ jupyter notebook
-
-It *is* possible to run multiple Python "backends" for Jupyter notebook, but
-that's a bit beyond this document.
-
-Related: multiple Pythons
-=========================
-
-How to build more than one Python
-
-* homebrew only (really) supports one Python per version (or maybe even one
-  per major version)
-* ``pyenv`` to build other Pythons. Complementary to virtual environments.
-* Still recommend using virtual environments for those separate Pythons!
-
-Related: wrapper tools
-======================
-
-**Actually, probably promote this to just after the main venv stuff?**
-
-Common points:
-
-* Maybe work for Python 2 as well
-* Maybe (because of that) create a Pyton 2 - style virtual environment, which
-  can cause probems in some corner cases
-* Tend (?) to keep the virtual environment directories in one central place,
-  rather than in individual "project" directories
-* May stop one needing to say ``source``
-* If you want a different Python (than the one the tool is installed for? -
-  might be non-obvious), you have to name it explicitly, and that's easy to
-  forget. That's not possible with the ``python3 -m venv`` approach
-  (obviously).
-* May give you other benefits (i.e., pipenv and poetry do other things, like
-  providing a list of packages installed and a lockfile)
-* Document which work on Windows (if any do not)
+Wrappers to make it easier
+==========================
 
 virtualenv
 ----------
@@ -1366,7 +1097,7 @@ poetry requires:
 
   Do you confirm generation? (yes/no) [yes]
 
-and the resultant file looks like::
+and the resultant file is indeed as described::
 
   [tool.poetry]
   name = "temp"
@@ -1613,68 +1344,289 @@ I don't know much about conda_, because I've never used it.
 * there is miniconda_ which is ``conda`` without *all* of the packages - this
   is closer to just using ``pip``.
 
+IDEs
+====
 
-Other things
-------------
+VS Code
+-------
 
-These are all things I have not used.
+.. _`VS Code`: https://code.visualstudio.com/
+.. _`Using Python environments in VS Code`: https://code.visualstudio.com/docs/python/environments
 
-* venv_manager_
-* direnv_
-* upm_
+`VS Code`_ (Visual Studio Code) supports Python virtual environments.
 
-  A "universal package manager", which is meant to act as a consistent front
-  end (command line tool) for various different programming languages. For
-  Python it wraps poetry_
+If you are editing a Python file, the Python interpreter being used is shown
+at the bottom left of the screen.
+
+If you click on that, then you will be shown a list of available Python
+interpreters, and that will include those provided by your virtual
+environments.
+
+`Using Python environments in VS Code`_ explains how it decides where to look,
+and also how to specify a Python interpreter that it cannout automatically
+find.
+
+If you are working with a VS Code "workspace", then it will automatically find a
+``.venv`` directory in that workspace.
+
+Also, VS Code understands the locations that virtualenvwrapper_ and pipenv_
+use to store virtual environments, and its simple to use with poetry_ as well
+(see the second article in `Python projects with Poetry and VSCode`_).
+
+PyCharm
+-------
+
+.. _PyCharm: https://www.jetbrains.com/pycharm/
+
+PyCharm_: always thinks in terms of "projects". 
+
+`Configure a virtual environment`_ explains how to use and create virtual
+environments in PyCharm, and `Conda virtual environment`_ explains how to use
+conda_ virtual environments.
+
+When setting up the Python interpreter for use in a PyCharm project, you need
+to specify the full path to the Python executable. So, for instance::
+
+  ~/tibs/temp/venv/bin/python3
+
+.. _`Configure a virtual environment`:
+   https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html
+.. _`Conda virtual environment`:
+   https://www.jetbrains.com/help/pycharm/conda-support-creating-conda-virtual-environment.html
+
+Atom
+----
+
+.. _Atom: https://atom.io/
+
+Atom_ ...
+
+There appear to be more than one packages that support virtual environments
+for Python in atom. I'm assuimg that if you use atom you know your way around
+the package system.
+
+Jupyter notebook
+----------------
+
+.. _Jupyter: https://jupyter.org/
+
+Jupyter_ notebook isn't really an IDE, but virtual environments are still
+relevant when using it.
+
+The simplest thing to do is to create your virtual environment, then install
+jupyter notebook within it. When you run that jupyter notebook, it will
+automatically use the Python it was installed for.
+
+For instance::
+
+  $ source .venv/bin/activate
+  $ pip install jupyter
+  $ jupyter notebook
+
+It *is* possible to run multiple Python "backends" for Jupyter notebook, but
+that's a bit beyond this document.
+
+Awkward questions
+=================
+
+What happens if I activate a virtual environment while I've got one activated?
+------------------------------------------------------------------------------
+
+The new activation will "take over".
+
+In particular, the old virtual environment binary directory is removed from
+the PATH and the new one is added instead.
+
+However, I don't know if anything *promises* that this will work, so it's
+perhaps best not to rely on it.
+
+
+Can I (deliberately) create a virtual environment that depends on another?
+--------------------------------------------------------------------------
+
+Yes. Simply do ``python -m venv <name>`` inside an already activated virtual
+environment.
+
+If you inspect the ``bin/python`` entry (on unix, at least) you will see it
+links to the Python from the earlier virtual environment.
+
+*Why* you might want to do that, and how useful it might be, is
+another discussion.
+
+How do I stop ``pip`` from installing outside a virtual environment?
+--------------------------------------------------------------------
+
+It's not very well documented, but the simplest way to do this is to set the
+environment variable::
+
+  PIP_REQUIRE_VIRTUALENV=true
+
+For instance, in your ``.bashrc`` you would add::
+
+  export PIP_REQUIRE_VIRTUALENV=true
+
+and that would then take effect when you open a new shell.
+
+When that is set, any attempt to use ``pip install <something>`` outside a
+virtual environment will give the error message::
+
+  ERROR: Could not find an activated virtualenv (required).
+
+
+Do I *need* to activate the virtual environment?
+------------------------------------------------
+
+Well, actually, no. It just makes things more convenient. If you run the
+Python in the virtual environment ``bin`` directory (``Scripts`` for Wndows)
+explicitly, then that Python will "look around itself" and use the virtual
+environment.
+
+So:
+
+.. code:: bash
+
+  (venv) tibs ~/temp$ deactivate
+  tibs ~/temp$ venv/bin/python
+  Python 3.7.6 (default, Jan 28 2020, 22:16:20)
+  [Clang 11.0.0 (clang-1100.0.33.16)] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> import requests
+  >>>
+
+That *also* means that if you install a Python program to the virtual
+environment ``bin`` directory, and run it directly (using its full path) then
+it too will know what environment to use, without your needing to activate the
+virtual environment.
+
+For example:
+
+.. code:: bash
+
+  tibs ~/temp$ python3 -m venv pydep
+  tibs ~/temp$ source pydep/bin/activate.fish
+  (pydep) tibs ~/temp$ pip install pipdeptree
+  Collecting pipdeptree
+    Using cached https://files.pythonhosted.org/packages/12/64/26c7df3ad833cd6e8b9735c5958b25d6aef1617c915b2731baedfbeee712/pipdeptree-0.13.2-py3-none-any.whl
+  Requirement already satisfied: pip>=6.0.0 in ./pydep/lib/python3.7/site-packages (from pipdeptree) (19.2.3)
+  Installing collected packages: pipdeptree
+  Successfully installed pipdeptree-0.13.2
+  (pydep) tibs ~/temp$ ls pydep/bin/pipdeptree
+  pydep/bin/pipdeptree
+  (pydep) tibs ~/temp$ deactivate
+  tibs ~/temp$ pydep/bin/pipdeptree --version
+  0.13.2
+
+The venv directory and version control systems
+==============================================
+
+Broadly, don't commit the ``venv`` directory to your version control
+system. It doesn't contain anything portable (by definition).
+
+If you're using git, then you may want to add a rule to your ``.gitignore``
+file - for instance::
+
+  /venv/
+
+(altering to match the actual name of the directory).
+
+
+  **Is the next bit good advice?**
+  
+  *However* if your git repository is shared with anyone else, you might not
+  want to assume that everyone uses the same venv directory name. In that case,
+  it may be to put it into a top-level ``.gitignore`` (e.g., ``~/.gitignore``)
+  instead.
+
+The ``--system-site-packages`` switch
+=====================================
+
+Normally, when I create a new virtual environment, it starts without anything
+installed (except ``pip`` and other basic infrastructure). So if the Python I
+used to create the virtual environment (the ``python3`` in ``python3 -m
+venv``) had (for instance) ``docutils`` installed, the new virtual environment
+would not.
+
+The ``--system-site-packages`` switch lets the new virtual environment "see"
+the packages in the original Python.
+
+.. code:: bash
+          
+  tibs ~/temp$ python3 -m venv secondary
+  tibs ~/temp$ source secondary/bin/activate.fish
+  (secondary) tibs ~/temp$ python
+  Python 3.7.6 (default, Jan 28 2020, 22:16:20)
+  [Clang 11.0.0 (clang-1100.0.33.16)] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> import docutils
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+  ModuleNotFoundError: No module named 'docutils'
+  >>>
+  (secondary) tibs ~/temp$ deactivate
+
+.. code:: bash
+          
+  tibs ~/temp$ python3 -m venv tertiary --system-site-packages
+  tibs ~/temp$ cat tertiary/pyvenv.cfg
+  home = /usr/local/bin
+  include-system-site-packages = true
+  version = 3.7.6
+  tibs ~/temp$ source tertiary/bin/activate.fish
+  (tertiary) tibs ~/temp$ python
+  Python 3.7.6 (default, Jan 28 2020, 22:16:20)
+  [Clang 11.0.0 (clang-1100.0.33.16)] on darwin
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> import docutils
+  >>>
+
+
+Multiple Pythons
+================
+
+Sometimes you need more than one version of Python - for instance, to test
+that a new version of Python is still compatible with existing code.
+
+System package managers cannot always help with this - they typically only
+support a subset of the possible versions (homebrew on the Mac supports one
+Python per major version), and it can take some time for a new version to be
+provided (particularly a problem with some enterprise linuxes).
+
+The solution is to use pyenv_, which makes it easy to build Python at
+different versions.
+
+(For Windows, you may want to look at `pyenv-win`_ instead)
+
+.. _pyenv: https://github.com/pyenv/pyenv
+.. _`pyenv-virtualenv`: https://github.com/pyenv/pyenv-virtualenv
+.. _`pyenv-win`: https://github.com/pyenv-win/pyenv-win
+
+Remember that this is *not* the same as virtual environments, but is
+complementary.
+
+Other tools
+===========
+
+These are lots of other tools out there for making it easier (in some sense)
+to manage virtual environments. Three (that I have not used!) are:
+
+* venv_manager_ is intended for bash and zsh users, and detects and activates
+  virtual environments are you ``cd`` into the directories that containt them
+  (by default it looks for ``.venv`` directories).
+  
+* direnv_ is a more powerful tool that takes actions when you ``cd`` into a
+  directory, and it too can be used to activate virtual environments. I
+  confess that its documentation intimidates me.
+  
+* upm_ is a "universal package manager", which is meant to act as a consistent
+  front end (command line tool) for various different programming
+  languages. For Python it wraps poetry_.
 
 .. _venv_manager: https://github.com/purajit/venv_manager
 .. _direnv: https://direnv.net/
 .. _upm: https://github.com/replit/upm
 
-That dratted ``source``
-=======================
-
-As I said earlier, it can be hard to remember that you have to ``source`` the
-activation script on unices. And this was clearly one of the reasons for the
-creation of virtualenvwrapper_.
-
-If you're happy programming your (unix) shell, you can get around this by
-creating a shell function to do the work instead. In fish, this is as simple
-as creating a file called ``~/.config/fish/functions/workon.fish`` that
-contains::
-
-  function workon --description "Activate Python virtualenv for named environment"
-
-      # Assumes the virtual environment is in ~/.venv
-      # So create a new virtual environment in the normal manner::
-      #
-      #  $ python3 -m venv ~/.venv/<name>
-      #
-      # where <name> is the virtual environment name.
-
-      if test (count $argv) != 1
-          echo "workon takes a single argument"
-          echo "  --list to list the virtual environments in ~/.venv"
-          echo "  <name> to source ~/.venv/<name>/bin/activate.fish"
-          return
-      end
-
-      if contains -- --list $argv
-          # Just list the available environments
-          ls $HOME/.venv
-          return
-      end
-
-      source $HOME/.venv/$argv[1]/bin/activate.fish
-  end
-
-although clearly there are a lot of assumptions baked into that particular
-function!
-
-On the whole, though, it's really just as easy to do it the longer way.
-
-Windows virtual machine
-=======================
+An example of using ``venv`` on Windows 10
+==========================================
 
 .. Super secure information(!)
 
@@ -1686,12 +1638,15 @@ Windows virtual machine
    And yes, those are stupid, and no, I don't use them anywhere else (!),
    which is why I'm happy putting them on github!
 
+I installed Windows 10 in a virtual machine on my Mac.
+   
 The version of Windows I got as a trial version was not recent enough to
-prompt me to get Python when I typed ``python`` at the CMD.EXE prompt, so I
-did have to go to the Microsoft App Store and install it myself. Not a
-problem.
+prompt me to get Python when I typed ``python`` at the CMD.EXE prompt
 
-::
+I could have gone to the Microsoft App Store and install it myself, but I
+actually went to https://python.org and got an installer from there.
+
+Then ::
 
   C:\Users\Tibs>mkdir temp
   C:\Users\Tibs>cd temp
@@ -1780,3 +1735,86 @@ to:
    :height: 1208 px
    :scale: 50%
 
+Installing poetry
+-----------------
+
+The poetry_ documentation tells you how to install poetry on Windows if you're
+using the Windows bash shell, or if you're using Powershell, but doesn't
+actually say what to do if you're using CMD.EXE.
+
+As it turns out, the instructions for unix shells / the Windows bash shell::
+
+  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+  
+also work in CMD.EXE - although you may then need to add the poetry binary
+directory to your path - for instance, in my case
+``C:\Users\Tibs\.poetry\bin\``.
+
+
+Links
+=====
+
+https://www.pluralsight.com/tech-blog/managing-python-environments/ looks like
+a really good resource.
+
+https://interrupt.memfault.com/blog/conda-developer-environments - using conda
+
+https://www.b-list.org/weblog/2020/jan/05/packaging/ - A Python Packaging
+Carol "Quite often, I see people being wrong on the internet about Python
+packaging. But the way in which they’re wrong is subtle, and often passes
+unnoticed. The issue with much of the discussion is in conflating multiple
+different things under the term “packaging”, and failing to be clear exactly
+which of them is being discussed or criticized. In the spirit of Dickens, I’d
+like to break up the concept of “packaging” into at least three different
+topics, each associated with a specific use case, and then talk a bit about
+each of them"
+
+Official documentation:
+
+* `Creating Virtual Environments`_ in the `Python Packaging User Guide`_
+* `venv - Creation of virtual environments`_ in the Python library documentation
+* `Virtual Environments and Packages`_ in the Python tutorial
+
+.. _`Creating Virtual Environments`:
+    https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments
+.. _`Python Packaging User Guide`:
+    https://packaging.python.org/tutorials/installing-packages
+.. _`venv - Creation of virtual environments`: https://docs.python.org/3/library/venv.html
+.. _`Virtual Environments and Packages`: https://docs.python.org/3/tutorial/venv.html
+
+Other interesting pages:
+
+* `An Effective Python Environment: Making Yourself at Home`_, at `Real Python`_
+* `A Guide to Python Virtual Environments with virtualenvwrapper`_
+* `How to create a Python 3 virtual environment in Windows 10`_
+* `Virtual Environments`_ at `The Hitchhiker's Guide to Python`_, which shows
+  how to use `virtualenv`_ and `virtualenvwrapper`_
+  
+.. _`An Effective Python Environment: Making Yourself at Home`:
+   https://realpython.com/effective-python-environment/
+.. _`Real Python`: https://realpython.com
+.. _`A Guide to Python Virtual Environments with virtualenvwrapper`:
+   https://howchoo.com/g/nwewzjmzmjc/a-guide-to-python-virtual-environments-with-virtualenvwrapper
+.. _`How to create a Python 3 virtual environment in Windows 10`:
+   https://www.techcoil.com/blog/how-to-create-a-python-3-virtual-environment-in-windows-10/
+.. _`Virtual Environments`: https://python-guide-ru.readthedocs.io/en/latest/dev/virtualenvs.html
+.. _`The Hitchhiker's Guide to Python`: https://python-guide-ru.readthedocs.io/
+
+
+I don't talk about using ``conda`` here, but it's an alternative to the normal
+Python virtual environment mechanisms that was introduced by the Anaconda_
+project, which is much used in scientific Python.
+
+* `Getting started with Python environments (using Conda)`_
+
+.. _Anaconda: https://anaconda.org/
+.. _`Getting started with Python environments (using Conda)`:
+   https://towardsdatascience.com/getting-started-with-python-environments-using-conda-32e9f2779307
+
+The series `Python projects with Poetry and VSCode`_ (that link points to the
+first article) explains how to start a new project with poetry, add its
+virtual environment to VS Code, write some code, and finally publish it to
+PyPi_.
+
+.. _`Python projects with Poetry and VSCode`:
+   https://www.pythoncheatsheet.org/blog/python-projects-with-poetry-and-vscode-part-1/
