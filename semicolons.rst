@@ -43,3 +43,18 @@ I'm fairly convinced no-one would want to read this or listen to it...
 * What does the compiler do if a user misses one?
 * Programming languages that use other characters (erlang, prolog)
 * Rust and the meaning when a semicolon *isn't* there
+
+
+
+Things:
+
+- early languages didn't need to mark end of line: assembly, Fortran, Lisp
+- comments in lisp and assembly
+- BCPL continuation of lines - check BCPL syntax?
+- Introduction of semicolons - continuation or separation
+- Other languages using, e.g., ``.`` - Erlang and I think Prolog?
+- Optional semicolons - Python, Ruby - use to allow multiple statements or
+  expressions on one line
+- Optional semicolons - JavaScript - if omitted, it will try to guess
+- Compiler strategies if they're missing
+- Rust - distinction between line ending with semicolon and line not
