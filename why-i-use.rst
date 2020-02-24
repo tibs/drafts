@@ -17,3 +17,8 @@ editor?
 IDEs versus editors
 
 PyCharm/IntelliJ and VisualCode (is that the right name?)
+
+Video(s) that might be interesting:
+
+* https://cestlaz.github.io/post/using-emacs-67-emacs-rant/ - Using Emacs
+  Episode 67 - Emacs vs Vi a rant with some historical perspective
