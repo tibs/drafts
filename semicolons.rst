@@ -48,10 +48,20 @@ I'm fairly convinced no-one would want to read this or listen to it...
 
 Things:
 
-- early languages didn't need to mark end of line: assembly, Fortran, Lisp
+- the use of the semicolon in the english language
+- early languages didn't need to mark end of statement/expression: assembly,
+  Fortran, Lisp
 - comments in lisp and assembly
-- BCPL continuation of lines - check BCPL syntax?
 - Introduction of semicolons - continuation or separation
+- Complementary concept - continuation characters (this statement/expression
+  continues on the next virtual line)
+  
+  - BCPL continuation of statement/expression - check BCPL syntax?
+  - backslash to escape newline - what about white space after it
+  - a character at the start of the *next* line to indicate continuation
+    (?BCPL also?)
+  - the time GNU make (I think it was) changed its convention about that
+
 - Other languages using, e.g., ``.`` - Erlang and I think Prolog?
 - Optional semicolons - Python, Ruby - use to allow multiple statements or
   expressions on one line
