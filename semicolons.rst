@@ -71,7 +71,7 @@ Things:
 
 ----------------------------
 
-Useufl links
+Useful links
 ============
 
 * https://www.newyorker.com/books/page-turner/semicolons-so-tricky
@@ -121,6 +121,10 @@ Useufl links
 * https://pksunkara.com/semicolon/ - the "esoteric" programming language
   Semicolon, which uses only semicolons, reversed semicolons, spaces and
   newlines
+
+* https://lucumr.pocoo.org/2012/10/18/such-a-little-thing/ - Armin Ronacher on
+  semicolons in rust, and why they work as they do (and a discussion of Python
+  and Ruby on the way)
 
 ----------------------------
 
