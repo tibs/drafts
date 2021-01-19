@@ -126,6 +126,11 @@ Useful links
   semicolons in rust, and why they work as they do (and a discussion of Python
   and Ruby on the way)
 
+* https://www.americanscientist.org/article/the-semicolon-wars - from American
+  Scientist, JULY-AUGUST 2006, VOLUME 94, NUMBER 4, PAGE 299. Not actually
+  only about semicolons, more about how there is no one-true programming
+  language but people still get very attached. But a nice article.
+
 ----------------------------
 
 =======================
